@@ -3,12 +3,17 @@ import pandas as pd
 import numpy as np
 import pickle
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-model = pickle.load(open("LinearRegressionModel.pkl",'rb'))
-car= pd.read_csv('Cleaned Car.csv')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, "LinearRegressionModel.pkl")
+
+model = pickle.load(open(model_path, 'rb'))
+csv_path = os.path.join(BASE_DIR, "Cleaned Car.csv")
+car = pd.read_csv(csv_path)
 
 @app.route('/')
 def index():
